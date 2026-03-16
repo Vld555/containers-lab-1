@@ -15,10 +15,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v3
-        with:
-          version: 'latest'
+      - name: Setup Minikube
+        uses: medyagh/setup-minikube@latest
 
       - name: Validate YAML manifests
         run: |
