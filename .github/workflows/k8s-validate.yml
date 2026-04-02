@@ -1,0 +1,27 @@
+name: Kubernetes Manifests Validation
+
+on:
+  push:
+    branches:
+      - lab2/kubernetes-basics
+  pull_request:
+    branches:
+      - lab2/kubernetes-basics
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Minikube
+        uses: medyagh/setup-minikube@latest
+
+      - name: Validate YAML manifests
+        run: |
+          echo "Начинаем проверку манифестов в папке k8s/..."
+          for file in k8s/*.yaml; do
+            echo "Проверка файла: $file"
+            kubectl apply -f "$file" --dry-run=client
+          done
